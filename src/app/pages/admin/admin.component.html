@@ -1,0 +1,87 @@
+<header class="jumbotron text-center">
+    <h5>Admin Can Perform all the operations</h5>
+</header>
+<div class="container-fluid">
+    <h2>Food related operations...</h2>
+    <p>Admin can add new food,update,delete,view all foods items
+      <code>Active user:{{activeUser}}</code>
+      <ng-container *ngIf="activeUser">
+        <button (click)="logout()" class="btn btn-sm btn-danger float-right">Logout</button>
+      </ng-container>
+        <button data-toggle="modal" data-target="#exampleModal" class="btn btn-sm btn-success float-right">Add new food</button>
+    </p>
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Sl No</th>
+            <th>Food</th>
+            <th>Desc</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Action</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let f of foodItems; let i=index">
+            <th>{{i+1}}</th>
+            <td>{{f.food_name}}</td>
+            <td>{{f.food_desc}}</td>
+            <td>{{f.food_price}}</td>
+            <td><img width="68px" height="68px" src="http://localhost:8000/upload/{{f.food_image}}" alt="{{f.food_name}}" title="{{f.food_name}}"></td>
+            <td>
+                <button class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#exampleModal" (click)="myFoodSet(f)">Update</button>
+                <button class="btn btn-sm btn-outline-danger" (click)="delete(f._id)">Delete</button>
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+
+
+     
+  <!-- add Modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Food operations</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="myFood">
+            <div class="form-group">
+               <label>Food:</label>
+               <input type="text" formControlName="food_name" class="form-control"> 
+            </div>
+            <div class="form-group">
+                <label>Desc:</label>
+                <textarea rows="10" cols="20" formControlName="food_desc" class="form-control"></textarea>
+             </div>
+             <div class="form-group">
+                <label>Price:</label>
+                <input type="number" formControlName="food_price" class="form-control"> 
+             </div>
+             <div class="form-group">
+                <label>Image:</label>
+                <input type="file" (change)="setFile($event)" class="form-control"> 
+             </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <ng-container *ngIf="foodObject!=0 else AddButton">
+            <button type="button" class="btn btn-info" (click)="update()" >Update</button>
+          </ng-container>
+          <ng-template #AddButton>
+            <button type="button" class="btn btn-success" (click)="addFood()">Add food</button>
+          </ng-template>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
