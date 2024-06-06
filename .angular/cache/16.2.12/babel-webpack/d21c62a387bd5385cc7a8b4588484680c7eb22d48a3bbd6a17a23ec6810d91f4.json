@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const authGuard = (route, state) => {\n  let token = localStorage.getItem('token');\n  if (!token) {\n    alert('Please login to view this page');\n    return false;\n  }\n  return true;\n};","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
